@@ -37,7 +37,7 @@ class OperatorSerializer extends Serializer
     {
         switch(true) {
             case $operator instanceof EqualTo:
-                return array('name' => 'equals-to', 'value' => $operator->getValue());
+                return array('name' => 'equal-to', 'value' => $operator->getValue());
             case $operator instanceof GreaterThan:
                 return array('name' => 'greater-than', 'value' => $operator->getValue());
             case $operator instanceof GreaterThanEqual:
@@ -67,7 +67,8 @@ class OperatorSerializer extends Serializer
         $this->assertHasKey('name', $operator);
 
         switch($operator['name']) {
-            case 'equals-to':
+            case 'equals-to': // Left for backward compatibility, todo: should be removed in future
+            case 'equal-to':
                 $this->assertHasKey('value', $operator);
 
                 return new EqualTo($operator['value']);

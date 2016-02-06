@@ -12,13 +12,14 @@
 namespace Qandidate\Toggle\Serializer;
 
 use Qandidate\Toggle\OperatorCondition;
+use Qandidate\Toggle\Serializer;
 use Qandidate\Toggle\Toggle;
 use RuntimeException;
 
 /**
  * Hand written serializer to serialize a Toggle to a php array.
  */
-class ToggleSerializer
+class ToggleSerializer extends Serializer
 {
     private $operatorConditionSerializer;
 
@@ -158,12 +159,5 @@ class ToggleSerializer
         }
 
         throw new RuntimeException(sprintf('Unknown toggle strategy "%s".', $strategy));
-    }
-
-    private function assertHasKey($key, array $data)
-    {
-        if ( ! array_key_exists($key, $data)) {
-            throw new RuntimeException(sprintf('Missing key "%s" in data.', $key));
-        }
     }
 }

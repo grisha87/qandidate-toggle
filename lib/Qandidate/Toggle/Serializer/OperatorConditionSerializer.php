@@ -12,13 +12,12 @@
 namespace Qandidate\Toggle\Serializer;
 
 use Qandidate\Toggle\OperatorCondition;
-use Qandidate\Toggle\Serializer;
 use RuntimeException;
 
 /**
  * Hand written serializer to serialize an OperatorCondition to a php array.
  */
-class OperatorConditionSerializer extends Serializer
+class OperatorConditionSerializer
 {
     private $operatorSerializer;
 
@@ -62,5 +61,12 @@ class OperatorConditionSerializer extends Serializer
         $operator = $this->operatorSerializer->deserialize($condition['operator']);
 
         return new OperatorCondition($condition['key'], $operator);
+    }
+
+    private function assertHasKey($key, array $data)
+    {
+        if ( ! array_key_exists($key, $data)) {
+            throw new RuntimeException(sprintf('Missing key "%s" in data.', $key));
+        }
     }
 }

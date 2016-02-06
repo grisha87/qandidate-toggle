@@ -20,13 +20,12 @@ use Qandidate\Toggle\Operator\LessThan;
 use Qandidate\Toggle\Operator\LessThanEqual;
 use Qandidate\Toggle\Operator\Percentage;
 use Qandidate\Toggle\Operator\MatchesRegex;
-use Qandidate\Toggle\Serializer;
 use RuntimeException;
 
 /**
  * Hand written serializer to serialize an Operator to a php array.
  */
-class OperatorSerializer extends Serializer
+class OperatorSerializer
 {
     /**
      * @param Operator $operator
@@ -103,6 +102,13 @@ class OperatorSerializer extends Serializer
                 return new MatchesRegex($operator['value']);
             default:
                 throw new RuntimeException(sprintf('Unknown operator with name "%s".', $operator['name']));
+        }
+    }
+
+    private function assertHasKey($key, array $data)
+    {
+        if ( ! array_key_exists($key, $data)) {
+            throw new RuntimeException(sprintf('Missing key "%s" in data.', $key));
         }
     }
 }
